@@ -113,7 +113,6 @@ public class Server {
                     
                     String[] tokens = message.split(" ");
                     String command = tokens[0];
-                    String prmt1 = tokens[1];
                     
                     switch (command) {
                         
@@ -122,7 +121,7 @@ public class Server {
                         case ("getallmovies"):  //get all movies
                             try {
                                 List<Movie> movies = IMovieDao.getAllMovies();
-                                socketWriter.println(movieListJson(movies)); //sends message to client
+                                socketWriter.println(movieListJson(movies)); //reply output back to client (in json)
                             } catch (DaoException e) {
                                 System.out.println("Error message" + e);
                             }
@@ -138,9 +137,56 @@ public class Server {
                             }
                             break;
                             
-                        
+                        case("getmoviesbygenre"):   //get movies by genre
+                            String genre = tokens[1];
+                            try {
+                                List<Movie> movies = IMovieDao.getMoviesByGenre(genre);
+                                socketWriter.println(movieListJson(movies));
+                            }catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                            }
+                            break;
                             
+                        case("getmoviesbytitle"):   //get movies by title
+                            String title = tokens[1];
+                            try {
+                                List<Movie> movies = IMovieDao.getMoviesByTitle(title);
+                                socketWriter.println(movieListJson(movies));
+                            }catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                            }
+                            break;
                             
+                        case("getmoviesbydirector"):    //get movies by director
+                            String director = tokens[1];
+                            try {
+                                List<Movie> movies = IMovieDao.getMovieByDirector(director);
+                                socketWriter.println(movieListJson(movies));
+                            }catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                            }
+                            break;
+                            
+                        case("deletemovie"):    //delete movie
+                            int deleteid = Integer.parseInt(tokens[1]);
+                            try {
+                                IMovieDao.deleteMovie(deleteid);
+                                socketWriter.println("Movie with id:" + deleteid + "deleted");
+                            }catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                            }
+                            break;
+                                
+                        case("updatemovietitle"):   //update movie title
+                            int updateid = Integer.parseInt(tokens[1]);
+                            String updatetitle = tokens[2];
+                            try {
+                                IMovieDao.updateMovieTitle(updateid, updatetitle);
+                                socketWriter.println("Movie title updated.");
+                            }catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                            }
+                            break;
                             
                             
                             
@@ -158,6 +204,7 @@ public class Server {
         }
     }
 
+    //movie list convert to json method
     public static String movieListJson(List<Movie> list) {
         String jsonString = " { \" movies \" : [";
         int i = 1;

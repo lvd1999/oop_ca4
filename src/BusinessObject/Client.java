@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -53,8 +52,9 @@ public class Client {
 //            System.out.println("[Commands: \"Time\" to get time, or \"Echo message\" to get echo)]");
 //            System.out.println("Please enter a command: ");
 //            
-            System.out.println("\"getallmovies\" , \"getmoviebyid\" id");
+            System.out.println("\"getallmovies\" , \"getmoviebyid_(id)\" , \"getmoviesbygenre_(genre)\" , \"getmoviesbytitle_(title)\" , \"deletemovie\" , \"updatemovietitle_id_title\" ");
             System.out.println("Command:");
+            
             String command = input.nextLine();  // read a command from the user          
 
             OutputStream os = socket.getOutputStream();
@@ -75,7 +75,32 @@ public class Client {
                 System.out.println(in);
                 
                 
-            } else {
+            } else if (command.startsWith("getmoviesbygenre")) {    //get movies by genre
+                String in = socketReader.nextLine();
+                System.out.println(in);
+            } 
+            
+            else if (command.startsWith("getmoviesbytitle")) {    //get movies by genre
+                String in = socketReader.nextLine();
+                System.out.println(in);
+            }
+            
+            else if (command.startsWith("deletemovie")) {    //get movies by genre
+                String in = socketReader.nextLine();
+                System.out.println(in);
+            }
+            
+            else if (command.startsWith("updatemovietitle")) {    //get movies by genre
+                String in = socketReader.nextLine();
+                System.out.println(in);
+            }
+            
+            else if (command.startsWith("getmoviesbydirector")) {    //get movies by genre
+                String in = socketReader.nextLine();
+                System.out.println(in);
+            }
+            
+            else {
                 String in = socketReader.nextLine();// wait for, and retrieve the echo ( or other message)
                 System.out.println("Client: Response from server: \"" + in + "\"");
             }
