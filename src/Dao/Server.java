@@ -1,31 +1,3 @@
-/**
- * SERVER                                                   February 2019 DL 08/03/19
- *
- * Server accepts client connections, creates a ClientHandler to handle the
- * Client communication, creates a socket and passes the socket to the handler,
- * runs the handler in a separate Thread.
- *
- *
- * The handler reads requests from clients, and sends replies to clients, all in
- * accordance with the rules of the protocol. as specified in
- * "ClientServerBasic" sample program
- *
- * The following PROTOCOL is implemented:
- *
- * If ( the Server receives the request "Time", from a Client ) then : the
- * server will send back the current time
- *
- * If ( the Server receives the request "Echo message", from a Client ) then :
- * the server will send back the message
- *
- * If ( the Server receives the request it does not recognize ) then : the
- * server will send back the message "Sorry, I don't understand"
- *
- * This is an example of a simple protocol, where the server's response is based
- * on the client's request.
- *
- *
- */
 package Dao;
 
 import DTO.Movie;
@@ -42,6 +14,7 @@ import java.util.List;
 public class Server {
 
     public final MovieDaoInterface IMovieDao = new MySqlMovieDao();
+    public final WatchedDaoInterface WatchedDao = new MySqlWatchedDao();
 
     public static void main(String[] args) {
         Server server = new Server();
@@ -50,16 +23,15 @@ public class Server {
 
     public void start() {
         try {
-            ServerSocket ss = new ServerSocket(8080);  // set up ServerSocket to listen for connections on port 8080
+            ServerSocket ss = new ServerSocket(8080);
 
             System.out.println("Server: Server started. Listening for connections on port 8080...");
 
-            int clientNumber = 0;  // a number for clients that the server allocates as clients connect
+            int clientNumber = 0; 
 
-            while (true) // loop continuously to accept new client connections
+            while (true) 
             {
-                Socket socket = ss.accept();    // listen (and wait) for a connection, accept the connection, 
-                // and open a new socket to communicate with the client
+                Socket socket = ss.accept();    
                 clientNumber++;
 
                 System.out.println("Server: Client " + clientNumber + " has connected.");
@@ -67,8 +39,8 @@ public class Server {
                 System.out.println("Server: Port# of remote client: " + socket.getPort());
                 System.out.println("Server: Port# of this server: " + socket.getLocalPort());
 
-                Thread t = new Thread(new ClientHandler(socket, clientNumber)); // create a new ClientHandler for the client,
-                t.start();                                                  // and run it in its own thread
+                Thread t = new Thread(new ClientHandler(socket, clientNumber)); 
+                t.start();                                                 
 
                 System.out.println("Server: ClientHandler started in thread for client " + clientNumber + ". ");
                 System.out.println("Server: Listening for further connections...");
@@ -79,7 +51,7 @@ public class Server {
         System.out.println("Server: Server exiting, Goodbye!");
     }
 
-    public class ClientHandler implements Runnable // each ClientHandler communicates with one Client
+    public class ClientHandler implements Runnable
     {
 
         BufferedReader socketReader;
@@ -93,11 +65,11 @@ public class Server {
                 this.socketReader = new BufferedReader(isReader);
 
                 OutputStream os = clientSocket.getOutputStream();
-                this.socketWriter = new PrintWriter(os, true); // true => auto flush socket buffer
+                this.socketWriter = new PrintWriter(os, true);
 
-                this.clientNumber = clientNumber;  // ID number that we are assigning to this client
+                this.clientNumber = clientNumber;  
 
-                this.socket = clientSocket;  // store socket ref for closing 
+                this.socket = clientSocket; 
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -188,7 +160,25 @@ public class Server {
                             }
                             break;
                             
-                            
+                        case("watchMovie"):     //watch movie    
+                           int movieid = Integer.parseInt(tokens[1]);
+                           String username = tokens[2];
+                           try {
+                               WatchedDao.insertWatchedEntry(username, movieid);
+                               socketWriter.println("Watched movie recorded.");
+                           } catch (DaoException e) {
+                               System.out.println("Error message" + e);
+                           }
+                           
+//                        case("recommend"):
+//                            String user = tokens[1];
+//                            try {
+//                                List<Movie> movies = WatchedDao.findMoviesWatchedByUsername(user);
+//                                socketWriter.println(movieListJson(movies));
+//                            }catch (DaoException e) {
+//                                System.out.println("Error message" + e);
+//                            }
+//                            break;
                             
                         default:
                             socketWriter.println("I'm sorry I don't understand :(");

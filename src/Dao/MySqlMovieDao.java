@@ -131,13 +131,9 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
         List<Movie> movies = new ArrayList<>();
 
         try {
-            //Get connection object using the methods in the super class (MySqlDao.java)...
             con = this.getConnection();
-
             String query = "SELECT * FROM movies WHERE genre LIKE ?";
             ps = con.prepareStatement(query);
-
-            //Using a PreparedStatement to execute SQL...
             ps.setString(1, "%" + genreFilter + "%");
             rs = ps.executeQuery();
 
