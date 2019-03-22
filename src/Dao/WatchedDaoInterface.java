@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface WatchedDaoInterface {
     public void insertWatchedEntry(String user, int movie_id) throws DaoException;
-//    public List<Movie> findMoviesWatchedByUsername(String user) throws DaoException;
+    public List<Movie> findMoviesWatchedByUsername(String user) throws DaoException;
 }

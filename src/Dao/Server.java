@@ -170,15 +170,15 @@ public class Server {
                                System.out.println("Error message" + e);
                            }
                            
-//                        case("recommend"):
-//                            String user = tokens[1];
-//                            try {
-//                                List<Movie> movies = WatchedDao.findMoviesWatchedByUsername(user);
-//                                socketWriter.println(movieListJson(movies));
-//                            }catch (DaoException e) {
-//                                System.out.println("Error message" + e);
-//                            }
-//                            break;
+                        case("recommend"):
+                            String user = tokens[1];
+                            try {
+                                List<Movie> movies = WatchedDao.findMoviesWatchedByUsername(user);
+                                socketWriter.println(movieListJson(movies));
+                            }catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                            }
+                            break;
                             
                         default:
                             socketWriter.println("I'm sorry I don't understand :(");

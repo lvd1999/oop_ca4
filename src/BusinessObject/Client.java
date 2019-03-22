@@ -35,6 +35,8 @@ public class Client {
             String username = input.nextLine();
             
             System.out.println("\"getallmovies\" , \"getmoviebyid_(id)\" , \"getmoviesbydirector_(director)\" , \"getmoviesbygenre_(genre)\" , \"getmoviesbytitle_(title)\" , \"deletemovie\" , \"updatemovietitle_id_title\" , \"watchMovie\" , \"recommend\"");
+            
+            
             System.out.println("Command:");
             
             String command = input.nextLine();         
@@ -94,9 +96,7 @@ public class Client {
             
             else if(command.startsWith("recommend")) {
                 socketWriter.println(command += " " + username);
-                System.out.println("socket in ok");
                 String in = socketReader.nextLine();
-                System.out.println("socket out read ok");
                 System.out.println(in);
             }
             
@@ -104,6 +104,7 @@ public class Client {
                 String in = socketReader.nextLine();
                 System.out.println("Client: Response from server: \"" + in + "\"");
             }
+            
             socketWriter.close();
             socketReader.close();
             socket.close();
