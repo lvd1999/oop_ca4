@@ -169,6 +169,7 @@ public class Server {
                            } catch (DaoException e) {
                                System.out.println("Error message" + e);
                            }
+                           break;
                            
                         case("recommend"):
                             String user = tokens[1];
@@ -180,8 +181,12 @@ public class Server {
                             }
                             break;
                             
+                        case("quit"):
+                            break;
+//                            socket.close();
+                            
                         default:
-                            socketWriter.println("I'm sorry I don't understand :(");
+                            socketWriter.println("No such command!");
                     }
                 }
 

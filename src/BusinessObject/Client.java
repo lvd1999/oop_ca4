@@ -33,81 +33,69 @@ public class Client {
 
             System.out.println("Enter username: ");
             String username = input.nextLine();
-            
+
             System.out.println("\"getallmovies\" , \"getmoviebyid_(id)\" , \"getmoviesbydirector_(director)\" , \"getmoviesbygenre_(genre)\" , \"getmoviesbytitle_(title)\" , \"deletemovie\" , \"updatemovietitle_id_title\" , \"watchMovie\" , \"recommend\"");
-            
-            
-            System.out.println("Command:");
-            
-            String command = input.nextLine();         
+            boolean restart = true;
+            while (restart) {
+                OutputStream os = socket.getOutputStream();
+                PrintWriter socketWriter = new PrintWriter(os, true);
+                System.out.println("Command:");
 
-            OutputStream os = socket.getOutputStream();
-            PrintWriter socketWriter = new PrintWriter(os, true);// true=> auto flush buffers
-            
-            
-            Scanner socketReader = new Scanner(socket.getInputStream());
+                String command = input.nextLine();
 
-            
-            if (command.startsWith("getallmovies")) {       //get all movies
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-                
-            } else if (command.startsWith("getmoviebyid")) {    //get movie by id
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-                
-            } else if (command.startsWith("getmoviesbygenre")) {    //get movies by genre
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-            } 
-            
-            else if (command.startsWith("getmoviesbytitle")) {    //get movies by genre
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
+                Scanner socketReader = new Scanner(socket.getInputStream());
+
+                if (command.startsWith("getallmovies")) {       //get all movies
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+
+                } else if (command.startsWith("getmoviebyid")) {    //get movie by id
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+
+                } else if (command.startsWith("getmoviesbygenre")) {    //get movies by genre
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                } else if (command.startsWith("getmoviesbytitle")) {    //get movies by genre
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                } else if (command.startsWith("deletemovie")) {    //get movies by genre
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                } else if (command.startsWith("updatemovietitle")) {    //get movies by genre
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                } else if (command.startsWith("getmoviesbydirector")) {    //get movies by genre                
+                    socketWriter.println(command);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                } else if (command.startsWith("watchMovie")) {
+                    socketWriter.println(command += " " + username);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                } else if (command.startsWith("recommend")) {
+                    socketWriter.println(command += " " + username);
+                    String in = socketReader.nextLine();
+                    System.out.println(in);
+                    
+                } else if(command.startsWith("quit")) {
+                    System.out.println("bye...");
+                    
+                    socketWriter.close();
+                    socketReader.close();
+                    socket.close();
+                    break;
+                } else {
+                    System.out.println("No such command!");
+                    break;
+                }
             }
-            
-            else if (command.startsWith("deletemovie")) {    //get movies by genre
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-            }
-            
-            else if (command.startsWith("updatemovietitle")) {    //get movies by genre
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-            }
-            
-            else if (command.startsWith("getmoviesbydirector")) {    //get movies by genre                
-                socketWriter.println(command);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-            }
-            
-            else if(command.startsWith("watchMovie")) {
-                socketWriter.println(command += " " + username);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-            }
-            
-            else if(command.startsWith("recommend")) {
-                socketWriter.println(command += " " + username);
-                String in = socketReader.nextLine();
-                System.out.println(in);
-            }
-            
-            else {
-                String in = socketReader.nextLine();
-                System.out.println("Client: Response from server: \"" + in + "\"");
-            }
-            
-            socketWriter.close();
-            socketReader.close();
-            socket.close();
 
         } catch (IOException e) {
             System.out.println("Client message: IOException: " + e);
