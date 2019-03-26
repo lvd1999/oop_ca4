@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.List;
 
 public class Server {
@@ -78,6 +79,7 @@ public class Server {
 
         @Override
         public void run() {
+            HashMap<String, Movie> cache = new HashMap<String, Movie>();
             String message;
             try {
                 while ((message = socketReader.readLine()) != null) {
@@ -85,6 +87,21 @@ public class Server {
                     
                     String[] tokens = message.split(" ");
                     String command = tokens[0];
+                    String key = tokens[0].concat(tokens[1]);
+                    
+                    
+                    
+                    
+                    if(cache.containsKey(key))
+                    {
+                        try{
+                        Movie m = cache.get(key);
+                        socketWriter.println(toJson(m));
+                        } catch (DaoException e) {
+                                System.out.println("Error message" + e);
+                        }
+                    }
+                    else{
                     
                     switch (command) {
                         
@@ -93,6 +110,7 @@ public class Server {
                         case ("getallmovies"):  //get all movies
                             try {
                                 List<Movie> movies = IMovieDao.getAllMovies();
+                                
                                 socketWriter.println(movieListJson(movies)); //reply output back to client (in json)
                             } catch (DaoException e) {
                                 System.out.println("Error message" + e);
@@ -102,7 +120,8 @@ public class Server {
                         case("getmoviebyid"):  //get movies by id
                             int id = Integer.parseInt(tokens[1]);
                             try {
-                                Movie m = IMovieDao.getMovieById(id);   
+                                Movie m = IMovieDao.getMovieById(id); 
+                                cache.put(key, m);
                                 socketWriter.println(toJson(m));    
                             } catch(DaoException e){
                                 System.out.println("Error message" + e);
@@ -189,7 +208,8 @@ public class Server {
                             socketWriter.println("No such command!");
                     }
                 }
-
+                    
+                }
                 socket.close();
 
             } catch (IOException ex) {

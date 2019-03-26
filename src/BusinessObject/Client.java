@@ -42,7 +42,7 @@ public class Client {
                 System.out.println("Command:");
 
                 String command = input.nextLine();
-
+                
                 Scanner socketReader = new Scanner(socket.getInputStream());
 
                 if (command.startsWith("getallmovies")) {       //get all movies

@@ -218,7 +218,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
                 movies.add(m);
             }
         } catch (SQLException e) {
-            throw new DaoException("getMoviesByTitle() " + e.getMessage());
+            throw new DaoException(e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -231,7 +231,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                throw new DaoException("getMoviesByTitle() " + e.getMessage());
+                throw new DaoException(e.getMessage());
             }
         }
         return movies;
@@ -286,7 +286,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
                     freeConnection(con);
                 }
             } catch (SQLException e) {
-                throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
+                throw new DaoException(e.getMessage());
             }
         }
         return m;     // m may be null 
