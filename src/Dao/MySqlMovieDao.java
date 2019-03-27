@@ -137,7 +137,6 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
             ps.setString(1, "%" + genreFilter + "%");
             rs = ps.executeQuery();
 
-            System.out.println(query);
             while (rs.next()) {
                 int movieId = rs.getInt("id");
                 String title = rs.getString("title");

@@ -26,8 +26,8 @@ public class Client {
         try {
             Socket socket = new Socket("localhost", 8080);
 
-            System.out.println("Client: Port# of this client : " + socket.getLocalPort());
-            System.out.println("Client: Port# of Server :" + socket.getPort());
+            System.out.println("Port of this client : " + socket.getLocalPort());
+            System.out.println("Port of Server :" + socket.getPort());
 
             System.out.println("Client: This Client is running and has connected to the server");
 
@@ -46,7 +46,7 @@ public class Client {
                 Scanner socketReader = new Scanner(socket.getInputStream());
 
                 if (command.startsWith("getallmovies")) {       //get all movies
-                    socketWriter.println(command);
+                    socketWriter.println(command += " " + "t");
                     String in = socketReader.nextLine();
                     System.out.println(in);
 
@@ -93,7 +93,7 @@ public class Client {
                     break;
                 } else {
                     System.out.println("No such command!");
-                    break;
+                    restart = true;
                 }
             }
 

@@ -26,25 +26,22 @@ public class Server {
         try {
             ServerSocket ss = new ServerSocket(8080);
 
-            System.out.println("Server: Server started. Listening for connections on port 8080...");
+            System.out.println("Server started. Listening for connections on port 8080...");
 
-            int clientNumber = 0; 
+            int clientNumber = 0;
 
-            while (true) 
-            {
-                Socket socket = ss.accept();    
+            while (true) {
+                Socket socket = ss.accept();
                 clientNumber++;
 
-                System.out.println("Server: Client " + clientNumber + " has connected.");
+                System.out.println("Client " + clientNumber + " has connected.");
 
-                System.out.println("Server: Port# of remote client: " + socket.getPort());
-                System.out.println("Server: Port# of this server: " + socket.getLocalPort());
+                System.out.println("Port of remote client: " + socket.getPort());
 
-                Thread t = new Thread(new ClientHandler(socket, clientNumber)); 
-                t.start();                                                 
+                Thread t = new Thread(new ClientHandler(socket, clientNumber));
+                t.start();
 
-                System.out.println("Server: ClientHandler started in thread for client " + clientNumber + ". ");
-                System.out.println("Server: Listening for further connections...");
+                System.out.println("ClientHandler started in thread for client " + clientNumber + ". ");
             }
         } catch (IOException e) {
             System.out.println("Server: IOException: " + e);
@@ -52,8 +49,7 @@ public class Server {
         System.out.println("Server: Server exiting, Goodbye!");
     }
 
-    public class ClientHandler implements Runnable
-    {
+    public class ClientHandler implements Runnable {
 
         BufferedReader socketReader;
         PrintWriter socketWriter;
@@ -68,9 +64,9 @@ public class Server {
                 OutputStream os = clientSocket.getOutputStream();
                 this.socketWriter = new PrintWriter(os, true);
 
-                this.clientNumber = clientNumber;  
+                this.clientNumber = clientNumber;
 
-                this.socket = clientSocket; 
+                this.socket = clientSocket;
 
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -80,135 +76,142 @@ public class Server {
         @Override
         public void run() {
             HashMap<String, Movie> cache = new HashMap<String, Movie>();
+            HashMap<String, List<Movie>> Listcache = new HashMap<>();
+
             String message;
             try {
                 while ((message = socketReader.readLine()) != null) {
                     System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
-                    
+
                     String[] tokens = message.split(" ");
                     String command = tokens[0];
                     String key = tokens[0].concat(tokens[1]);
-                    
-                    
-                    
-                    
-                    if(cache.containsKey(key))
-                    {
-                        try{
-                        Movie m = cache.get(key);
-                        socketWriter.println(toJson(m));
+
+                    if (cache.containsKey(key)) {
+                        try {
+                            Movie m = cache.get(key);
+                            System.out.println("found in cache: " + toJson(m));
+                            socketWriter.println(toJson(m));
                         } catch (DaoException e) {
-                                System.out.println("Error message" + e);
+                            System.out.println("Error message" + e);
                         }
                     }
-                    else{
-                    
-                    switch (command) {
-                        
-                        //cases
-                        
-                        case ("getallmovies"):  //get all movies
-                            try {
-                                List<Movie> movies = IMovieDao.getAllMovies();
-                                
-                                socketWriter.println(movieListJson(movies)); //reply output back to client (in json)
-                            } catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
+                     else if (Listcache.containsKey(key)) {
+                        List<Movie> movies = Listcache.get(key);
+                        System.out.println("found in cache: " + movieListJson(movies));
+                        socketWriter.println(movieListJson(movies));
+                    } 
+                        else {
 
-                        case("getmoviebyid"):  //get movies by id
-                            int id = Integer.parseInt(tokens[1]);
-                            try {
-                                Movie m = IMovieDao.getMovieById(id); 
-                                cache.put(key, m);
-                                socketWriter.println(toJson(m));    
-                            } catch(DaoException e){
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                            
-                        case("getmoviesbygenre"):   //get movies by genre
-                            String genre = tokens[1];
-                            try {
-                                List<Movie> movies = IMovieDao.getMoviesByGenre(genre);
-                                socketWriter.println(movieListJson(movies));
-                            }catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                            
-                        case("getmoviesbytitle"):   //get movies by title
-                            String title = tokens[1];
-                            try {
-                                List<Movie> movies = IMovieDao.getMoviesByTitle(title);
-                                socketWriter.println(movieListJson(movies));
-                            }catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                            
-                        case("getmoviesbydirector"):    //get movies by director
-                            String director = tokens[1];
-                            try {
-                                List<Movie> movies = IMovieDao.getMovieByDirector(director);
-                                socketWriter.println(movieListJson(movies));
-                            }catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                            
-                        case("deletemovie"):    //delete movie
-                            int deleteid = Integer.parseInt(tokens[1]);
-                            try {
-                                IMovieDao.deleteMovie(deleteid);
-                                socketWriter.println("Movie with id:" + deleteid + "deleted");
-                            }catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                                
-                        case("updatemovietitle"):   //update movie title
-                            int updateid = Integer.parseInt(tokens[1]);
-                            String updatetitle = tokens[2];
-                            try {
-                                IMovieDao.updateMovieTitle(updateid, updatetitle);
-                                socketWriter.println("Movie title updated.");
-                            }catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                            
-                        case("watchMovie"):     //watch movie    
-                           int movieid = Integer.parseInt(tokens[1]);
-                           String username = tokens[2];
-                           try {
-                               WatchedDao.insertWatchedEntry(username, movieid);
-                               socketWriter.println("Watched movie recorded.");
-                           } catch (DaoException e) {
-                               System.out.println("Error message" + e);
-                           }
-                           break;
-                           
-                        case("recommend"):
-                            String user = tokens[1];
-                            try {
-                                List<Movie> movies = WatchedDao.findMoviesWatchedByUsername(user);
-                                socketWriter.println(movieListJson(movies));
-                            }catch (DaoException e) {
-                                System.out.println("Error message" + e);
-                            }
-                            break;
-                            
-                        case("quit"):
-                            break;
+                        switch (command) {
+
+                            //cases
+                            case ("getallmovies"):  //get all movies
+                                try {
+                                    List<Movie> movies = IMovieDao.getAllMovies();
+                                    Listcache.put(key, movies);
+                                    socketWriter.println(movieListJson(movies)); 
+
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("getmoviebyid"):  //get movies by id
+                                int id = Integer.parseInt(tokens[1]);
+                                try {
+                                    Movie m = IMovieDao.getMovieById(id);
+                                    cache.put(key, m);
+                                    socketWriter.println(toJson(m));
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("getmoviesbygenre"):   //get movies by genre
+                                String genre = tokens[1];
+                                try {
+                                    List<Movie> movies = IMovieDao.getMoviesByGenre(genre);
+                                    Listcache.put(key, movies);
+                                    socketWriter.println(movieListJson(movies));
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("getmoviesbytitle"):   //get movies by title
+                                String title = tokens[1];
+                                try {
+                                    List<Movie> movies = IMovieDao.getMoviesByTitle(title);
+                                    Listcache.put(key, movies);
+                                    socketWriter.println(movieListJson(movies));
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("getmoviesbydirector"):    //get movies by director
+                                String director = tokens[1];
+                                try {
+                                    List<Movie> movies = IMovieDao.getMovieByDirector(director);
+                                    Listcache.put(key, movies);
+                                    socketWriter.println(movieListJson(movies));
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("deletemovie"):    //delete movie
+                                int deleteid = Integer.parseInt(tokens[1]);
+                                try {
+                                    IMovieDao.deleteMovie(deleteid);
+                                    socketWriter.println("Movie with id:" + deleteid + "deleted");
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("updatemovietitle"):   //update movie title
+                                int updateid = Integer.parseInt(tokens[1]);
+                                String updatetitle = tokens[2];
+                                try {
+                                    IMovieDao.updateMovieTitle(updateid, updatetitle);
+                                    socketWriter.println("Movie title updated.");
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("watchMovie"):     //watch movie    
+                                int movieid = Integer.parseInt(tokens[1]);
+                                String username = tokens[2];
+                                try {
+                                    WatchedDao.insertWatchedEntry(username, movieid);
+                                    socketWriter.println("Watched movie recorded.");
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("recommend"):
+                                String user = tokens[1];
+                                try {
+                                    List<Movie> movies = WatchedDao.findMoviesWatchedByUsername(user);
+                                    socketWriter.println(movieListJson(movies));
+                                } catch (DaoException e) {
+                                    System.out.println("Error message" + e);
+                                }
+                                break;
+
+                            case ("quit"):
+                                break;
 //                            socket.close();
-                            
-                        default:
-                            socketWriter.println("No such command!");
+
+                            default:
+                                socketWriter.println("No such command!");
+                        }
                     }
-                }
-                    
+
                 }
                 socket.close();
 
@@ -256,27 +259,25 @@ public class Server {
         return jsonString;
     }
 
-        public static String toJson(Movie m) throws DaoException
-    {
+    public static String toJson(Movie m) throws DaoException {
         String json = " { \"id\" : " + m.getId() + ","
-                    + "\"title\" : \"" + m.getTitle() + "\","
-                    + "\"genre\" : \"" + m.getGenre() + "\","
-                    + "\"director\" : \"" + m.getDirector() + "\","
-                    + "\"runtime\" : \"" + m.getRuntime() + "\","
-                    + "\"plot\" : \"" + m.getPlot() + "\","
-                    + "\"location\" :\" " + m.getLocation() + "\","
-                    + "\"poster\" : \"" + m.getPoster() + "\","
-                    + "\"rating\" : \"" + m.getRating() + "\","
-                    + "\"format\" : \"" + m.getFormat() + "\","
-                    + "\"year\" : \"" + m.getYear() + "\","
-                    + "\"starring\" : \"" + m.getStarring() + "\","
-                    + "\"copies\" : " + m.getCopies() + ","
-                    + "\"barcode\" : \"" + m.getBarcode() + "\","
-                    + "\"user_rating\" : \"" + m.getUser_rating()
-                    + "\"}";
-        
+                + "\"title\" : \"" + m.getTitle() + "\","
+                + "\"genre\" : \"" + m.getGenre() + "\","
+                + "\"director\" : \"" + m.getDirector() + "\","
+                + "\"runtime\" : \"" + m.getRuntime() + "\","
+                + "\"plot\" : \"" + m.getPlot() + "\","
+                + "\"location\" :\" " + m.getLocation() + "\","
+                + "\"poster\" : \"" + m.getPoster() + "\","
+                + "\"rating\" : \"" + m.getRating() + "\","
+                + "\"format\" : \"" + m.getFormat() + "\","
+                + "\"year\" : \"" + m.getYear() + "\","
+                + "\"starring\" : \"" + m.getStarring() + "\","
+                + "\"copies\" : " + m.getCopies() + ","
+                + "\"barcode\" : \"" + m.getBarcode() + "\","
+                + "\"user_rating\" : \"" + m.getUser_rating()
+                + "\"}";
+
         return json;
     }
-        
-        
+
 }
