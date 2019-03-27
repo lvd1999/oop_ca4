@@ -46,7 +46,7 @@ public class Server {
         } catch (IOException e) {
             System.out.println("Server: IOException: " + e);
         }
-        System.out.println("Server: Server exiting, Goodbye!");
+        System.out.println("Server exiting, Goodbye!");
     }
 
     public class ClientHandler implements Runnable {
@@ -81,7 +81,7 @@ public class Server {
             String message;
             try {
                 while ((message = socketReader.readLine()) != null) {
-                    System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
+                    System.out.println("Command from client " + clientNumber + ": " + message);
 
                     String[] tokens = message.split(" ");
                     String command = tokens[0];
@@ -218,7 +218,7 @@ public class Server {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("Server: (ClientHandler): Handler for Client " + clientNumber + " is terminating .....");
+            System.out.println("Handler for Client " + clientNumber + " is terminating .....");
         }
     }
 
