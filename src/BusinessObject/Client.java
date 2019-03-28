@@ -75,11 +75,11 @@ public class Client {
                     socketWriter.println(command);
                     String in = socketReader.nextLine();
                     System.out.println(in);
-                } else if (command.startsWith("watchMovie")) {
+                } else if (command.startsWith("watchMovie")) {              //watch movie
                     socketWriter.println(command += " " + username);
                     String in = socketReader.nextLine();
                     System.out.println(in);
-                } else if (command.startsWith("recommend")) {
+                } else if (command.startsWith("recommend")) {       //currently working as getmoviewatchedbyuser
                     socketWriter.println(command += " " + username);
                     String in = socketReader.nextLine();
                     System.out.println(in);

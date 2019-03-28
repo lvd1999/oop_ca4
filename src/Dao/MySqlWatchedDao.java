@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dao;
 
 import DTO.Movie;
@@ -14,10 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author lvd_9
- */
 public class MySqlWatchedDao extends MySqlDao implements WatchedDaoInterface {
 
     @Override
@@ -78,7 +69,7 @@ public class MySqlWatchedDao extends MySqlDao implements WatchedDaoInterface {
                 String barcode = rs.getString("barcode");
                 String user_rating = rs.getString("user_rating");
 
-                Movie m = new Movie(movieId, title, genre, director, runtime, plot, location, poster, rating, format, year, starring, copies, barcode, user_rating);
+                Movie m = new Movie(movieId, title, genre, director, runtime, plot, location, poster, rating, format, year, starring, copies, barcode, user_rating);          
                 movies.add(m);
             }
         } catch (SQLException e) {
