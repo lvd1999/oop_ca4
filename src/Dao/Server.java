@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Server {
 
@@ -197,7 +199,15 @@ public class Server {
                                 String user = tokens[1];
                                 try {
                                     List<Movie> movies = WatchedDao.findMoviesWatchedByUsername(user);
-                                    socketWriter.println(movieListJson(movies));
+                                    //test methods for recommend
+                                    String genres[] = genres(movies);
+                                    for(int i=0;i<genres.length;i++)    //list of genre by each movie
+                                    {
+                                        System.out.println(genres[i]);
+                                    }
+                                        System.out.println("most frequent: " + mostFrequent(genres,genres.length));     //most occurence genre name
+                                        List<Movie> recommendedMovieList = IMovieDao.getMoviesByGenre(mostFrequent(genres,genres.length));  //get movie list by the genre
+                                    socketWriter.println(movieListJson(recommendedMovieList));
                                 } catch (DaoException e) {
                                     System.out.println("Error message" + e);
                                 }
@@ -205,7 +215,6 @@ public class Server {
 
                             case ("quit"):
                                 break;
-//                            socket.close();
 
                             default:
                                 socketWriter.println("No such command!");
@@ -278,6 +287,55 @@ public class Server {
                 + "\"}";
 
         return json;
+    }
+    
+    public static String[] genres(List<Movie> movies)
+    {
+        String[] genres = new String[movies.size()];
+        
+        for(int i=0;i<movies.size();i++)
+        {
+            genres[i] = movies.get(i).getGenre();
+        }
+        return genres;
+    }
+    
+    public static String mostFrequent(String arr[], int n) 
+    { 
+          
+        // Insert all elements in hash 
+        Map<String, Integer> hp = 
+               new HashMap<String, Integer>(); 
+          
+        for(int i = 0; i < n; i++) 
+        { 
+            String key = arr[i]; 
+            if(hp.containsKey(key)) 
+            { 
+                int freq = hp.get(key); 
+                freq++; 
+                hp.put(key, freq); 
+            } 
+            else
+            { 
+                hp.put(key, 1); 
+            } 
+        } 
+          
+        // find max frequency. 
+        int max_count = 0;
+        String res = ""; 
+          
+        for(Entry<String, Integer> val : hp.entrySet()) 
+        { 
+            if (max_count < val.getValue()) 
+            { 
+                res = val.getKey(); 
+                max_count = val.getValue(); 
+            } 
+        } 
+          
+        return res; 
     }
 
 }
