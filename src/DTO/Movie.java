@@ -7,6 +7,7 @@ package DTO;
 
 import Exception.DaoException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -198,5 +199,87 @@ public class Movie {
         
         return json;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.id;
+        hash = 29 * hash + Objects.hashCode(this.title);
+        hash = 29 * hash + Objects.hashCode(this.genre);
+        hash = 29 * hash + Objects.hashCode(this.director);
+        hash = 29 * hash + Objects.hashCode(this.runtime);
+        hash = 29 * hash + Objects.hashCode(this.plot);
+        hash = 29 * hash + Objects.hashCode(this.location);
+        hash = 29 * hash + Objects.hashCode(this.poster);
+        hash = 29 * hash + Objects.hashCode(this.rating);
+        hash = 29 * hash + Objects.hashCode(this.format);
+        hash = 29 * hash + Objects.hashCode(this.year);
+        hash = 29 * hash + Objects.hashCode(this.starring);
+        hash = 29 * hash + this.copies;
+        hash = 29 * hash + Objects.hashCode(this.barcode);
+        hash = 29 * hash + Objects.hashCode(this.user_rating);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Movie other = (Movie) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.copies != other.copies) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.genre, other.genre)) {
+            return false;
+        }
+        if (!Objects.equals(this.director, other.director)) {
+            return false;
+        }
+        if (!Objects.equals(this.runtime, other.runtime)) {
+            return false;
+        }
+        if (!Objects.equals(this.plot, other.plot)) {
+            return false;
+        }
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        if (!Objects.equals(this.poster, other.poster)) {
+            return false;
+        }
+        if (!Objects.equals(this.rating, other.rating)) {
+            return false;
+        }
+        if (!Objects.equals(this.format, other.format)) {
+            return false;
+        }
+        if (!Objects.equals(this.year, other.year)) {
+            return false;
+        }
+        if (!Objects.equals(this.starring, other.starring)) {
+            return false;
+        }
+        if (!Objects.equals(this.barcode, other.barcode)) {
+            return false;
+        }
+        if (!Objects.equals(this.user_rating, other.user_rating)) {
+            return false;
+        }
+        return true;
+    }
+     
      
 }
