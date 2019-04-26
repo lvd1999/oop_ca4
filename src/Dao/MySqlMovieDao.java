@@ -20,13 +20,12 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
         List<Movie> movies = new ArrayList<>();
 
         try {
-            //Get connection object using the methods in the super class (MySqlDao.java)...
+
             con = this.getConnection();
 
             String query = "SELECT * FROM movies";
             ps = con.prepareStatement(query);
 
-            //Using a PreparedStatement to execute SQL...
             rs = ps.executeQuery();
             while (rs.next()) {
                 int movieId = rs.getInt("id");
@@ -65,7 +64,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
                 throw new DaoException("getAllMovies() " + e.getMessage());
             }
         }
-        return movies;     // may be empty
+        return movies;    
     }
 
     //GET MOVIES BY ID
@@ -119,7 +118,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
                 throw new DaoException("findUserByUsernamePassword() " + e.getMessage());
             }
         }
-        return m;     // m may be null 
+        return m;     
     }
 
     //GET MOVIES BY GENRE
@@ -186,7 +185,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
         List<Movie> movies = new ArrayList<>();
 
         try {
-            //Get connection object using the methods in the super class (MySqlDao.java)...
+            
             con = this.getConnection();
 
             String query = "SELECT * FROM movies WHERE title LIKE ?";
@@ -194,7 +193,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
             ps = con.prepareStatement(query);
             ps.setString(1, "%" + searchTitle + "%");
 
-            //Using a PreparedStatement to execute SQL...
+            
             rs = ps.executeQuery();
             while (rs.next()) {
                 int movieId = rs.getInt("id");
@@ -288,7 +287,7 @@ public class MySqlMovieDao extends MySqlDao implements MovieDaoInterface {
                 throw new DaoException(e.getMessage());
             }
         }
-        return m;     // m may be null 
+        return m;    
     }
 
     //GET MOVIES BY DIRECTOR

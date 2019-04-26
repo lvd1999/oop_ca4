@@ -1,0 +1,80 @@
+Apr 26, 2019 9:25:32 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:26:37 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:26:43 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 9:29:40 PM Dao.Server$ClientHandler run
+INFO: Command received: getallmovies t
+Apr 26, 2019 9:30:05 PM Dao.Server$ClientHandler run
+INFO: Command received: recommend tom
+Apr 26, 2019 9:32:40 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:32:44 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 9:32:54 PM Dao.Server$ClientHandler run
+INFO: Command received: getmoviesbydirector james
+Apr 26, 2019 9:33:05 PM Dao.Server$ClientHandler run
+INFO: Command received: getmoviesbygenre horror
+Apr 26, 2019 9:33:12 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 84 tom
+Apr 26, 2019 9:33:17 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 14 tom
+Apr 26, 2019 9:33:21 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 18 tom
+Apr 26, 2019 9:33:25 PM Dao.Server$ClientHandler run
+INFO: Command received: recommend tom
+Apr 26, 2019 9:34:03 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:34:11 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 9:34:18 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 84 james
+Apr 26, 2019 9:34:23 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 99 james
+Apr 26, 2019 9:34:27 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 100 james
+Apr 26, 2019 9:34:37 PM Dao.Server$ClientHandler run
+INFO: Command received: getmoviebyid 14
+Apr 26, 2019 9:34:44 PM Dao.Server$ClientHandler run
+INFO: Command received: getmoviebyid 14
+Apr 26, 2019 9:34:44 PM Dao.Server$ClientHandler run
+INFO: Command found in cache. Returning data from cache.
+Apr 26, 2019 9:34:53 PM Dao.Server$ClientHandler run
+INFO: Command received: recommend james
+Apr 26, 2019 9:36:38 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:36:41 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 9:50:25 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:50:28 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 9:50:39 PM Dao.Server$ClientHandler run
+INFO: Command received: watchMovie 14 ali
+Apr 26, 2019 9:55:42 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 9:55:44 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 9:55:50 PM Dao.Server$ClientHandler run
+INFO: Command received: recommend ali
+Apr 26, 2019 9:55:50 PM Dao.Server$ClientHandler run
+INFO: most frequent genre: Marvel, Action, Adventure, Sci-Fi
+Apr 26, 2019 10:00:59 PM Dao.Server$ClientHandler run
+INFO: Command received: recommend ali
+Apr 26, 2019 10:00:59 PM Dao.Server$ClientHandler run
+INFO: most frequent genre: Marvel, Action, Adventure, Sci-Fi
+Apr 26, 2019 10:37:18 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 10:37:20 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 10:37:23 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 10:43:29 PM Dao.Server start
+INFO: Server starting ...
+Apr 26, 2019 10:43:31 PM Dao.Server start
+INFO: A client has connected from: /127.0.0.1
+Apr 26, 2019 10:43:35 PM Dao.Server$ClientHandler run
+INFO: Command received: recommend ali
+Apr 26, 2019 10:43:35 PM Dao.Server$ClientHandler run
+INFO: most frequent genre: Marvel, Action, Adventure, Sci-Fi

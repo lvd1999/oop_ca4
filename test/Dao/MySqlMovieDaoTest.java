@@ -108,68 +108,61 @@ public class MySqlMovieDaoTest {
     /**
      * Test of updateMovieUser_Rating method, of class MySqlMovieDao.
      */
-//    @Test
-//    public void testUpdateMovieUser_Rating() throws Exception {
-//        System.out.println("updateMovieUser_Rating");
-//        int mId = 0;
-//        String mUser_Rating = "";
-//        MySqlMovieDao instance = new MySqlMovieDao();
-//        instance.updateMovieUser_Rating(mId, mUser_Rating);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testUpdateMovieUser_Rating() throws Exception {
+        System.out.println("updateMovieUser_Rating");
+        int mId = 0;
+        String mUser_Rating = "";
+        MySqlMovieDao instance = new MySqlMovieDao();
+        instance.updateMovieUser_Rating(mId, mUser_Rating);
+        // TODO review the generated test code and remove the default call to fail.
+    }
 
     /**
      * Test of updateMovieTitle method, of class MySqlMovieDao.
      */
-//    @Test
-//    public void testUpdateMovieTitle() throws Exception {
-//        System.out.println("updateMovieTitle");
-//        int id = 0;
-//        String title = "";
-//        MySqlMovieDao instance = new MySqlMovieDao();
-//        instance.updateMovieTitle(id, title);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testUpdateMovieTitle() throws Exception {
+        System.out.println("updateMovieTitle");
+        int id = 0;
+        String title = "";
+        MySqlMovieDao instance = new MySqlMovieDao();
+        instance.updateMovieTitle(id, title);
+    }
 
     /**
      * Test of addMovie method, of class MySqlMovieDao.
      */
-//    @Test
-//    public void testAddMovie() throws Exception {
-//        System.out.println("addMovie");
-//        String title = "";
-//        String genre = "";
-//        String director = "";
-//        String runtime = "";
-//        String plot = "";
-//        String location = "";
-//        String poster = "";
-//        String rating = "";
-//        String format = "";
-//        String year = "";
-//        String starring = "";
-//        int copies = 0;
-//        String barcode = "";
-//        String user_rating = "";
-//        MySqlMovieDao instance = new MySqlMovieDao();
-//        instance.addMovie(title, genre, director, runtime, plot, location, poster, rating, format, year, starring, copies, barcode, user_rating);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testAddMovie() throws Exception {
+        System.out.println("addMovie");
+        String title = "";
+        String genre = "";
+        String director = "";
+        String runtime = "";
+        String plot = "";
+        String location = "";
+        String poster = "";
+        String rating = "";
+        String format = "";
+        String year = "";
+        String starring = "";
+        int copies = 0;
+        String barcode = "";
+        String user_rating = "";
+        MySqlMovieDao instance = new MySqlMovieDao();
+        instance.addMovie(title, genre, director, runtime, plot, location, poster, rating, format, year, starring, copies, barcode, user_rating);
+    }
 
     /**
      * Test of deleteMovie method, of class MySqlMovieDao.
      */
-//    @Test
-//    public void testDeleteMovie() throws Exception {
-//        System.out.println("deleteMovie");
-//        int id = 0;
-//        MySqlMovieDao instance = new MySqlMovieDao();
-//        instance.deleteMovie(id);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
+    @Test
+    public void testDeleteMovie() throws Exception {
+        System.out.println("deleteMovie");
+        int id = 0;
+        MySqlMovieDao instance = new MySqlMovieDao();
+        instance.deleteMovie(id);
+    }
     
 }

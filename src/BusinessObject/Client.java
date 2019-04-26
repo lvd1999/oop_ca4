@@ -29,7 +29,7 @@ public class Client {
             System.out.println("Port of this client : " + socket.getLocalPort());
             System.out.println("Port of Server :" + socket.getPort());
 
-            System.out.println("Client: This Client is running and has connected to the server");
+            System.out.println("Client is running and has connected to the server");
 
             System.out.println("Enter username: ");
             String username = input.nextLine();
